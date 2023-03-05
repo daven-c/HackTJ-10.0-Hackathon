@@ -8,3 +8,12 @@ Contributors:
 
 ## Sources:
 https://google.github.io/mediapipe/solutions/hands.html
+
+
+## Controls
+* Thumb: Toggles Video Stream Window
+* Index Finger: Left Click
+* Middle Finger: Right Click
+* Ring Finger: Scroll Up
+* Pinky: Scroll Down
+* Fist: Quit Program
