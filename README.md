@@ -11,7 +11,7 @@ https://google.github.io/mediapipe/solutions/hands.html
 
 
 ## Controls
-* Thumb: Toggles Video Stream Window
+* Thumb: Toggle Input Lock
 * Index Finger: Left Click
 * Middle Finger: Right Click
 * Ring Finger: Scroll Up
