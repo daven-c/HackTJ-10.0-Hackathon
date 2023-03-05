@@ -1,0 +1,7 @@
+display=True
+absolute_display=False
+move=True
+left_click=True
+right_click=True
+scroll=True
+thumb_lock=True
