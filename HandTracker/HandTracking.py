@@ -45,7 +45,7 @@ if __name__ == '__main__':
     print(config)
     move_distance_threshold: int = 5  # min difference in pixels required to move
     bbx_scale = .4  # scale of full res width, .1-1# initialize key variables
-    smoothing = 3
+    smoothing = 2
 
     with mp.hands.Hands(static_image_mode=False, model_complexity=1, max_num_hands=1, min_detection_confidence=0.7,
                         min_tracking_confidence=0.7) as hands:
@@ -209,6 +209,12 @@ if __name__ == '__main__':
                                                   connection_drawing_spec=DrawingSpec(color=(0, 0, 0), thickness=2))
 
                         # Highlight fingers when active
+                        mp_drawing.draw_landmarks(image, hand_landmarks, [(1, 2), (2, 3), (3, 4)],
+                                                  landmark_drawing_spec=DrawingSpec(color=(255, 255, 255), thickness=2,
+                                                                                    circle_radius=1),
+                                                  connection_drawing_spec=DrawingSpec(
+                                                      color=(0, 255, 0) if thumb_active else (211, 0, 148),
+                                                      thickness=2))
                         mp_drawing.draw_landmarks(image, hand_landmarks, [(5, 6), (6, 7), (7, 8)],
                                                   landmark_drawing_spec=DrawingSpec(color=(255, 255, 255), thickness=2,
                                                                                     circle_radius=1),
