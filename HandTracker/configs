@@ -1,5 +1,5 @@
 display=True
-absolute_display=False
+absolute_display=True
 move=True
 left_click=True
 right_click=True
