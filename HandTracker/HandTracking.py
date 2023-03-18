@@ -111,16 +111,16 @@ if __name__ == '__main__':
                     capped_rel_pos: Tuple[float] = max(0.0, min(1.0, uncapped_rel_pos[0])), max(0.0, min(1.0, uncapped_rel_pos[
                         1]))  # apply floor and ceiling at 0, 1
 
-                    angle_thumb: float = get_angle(landmark_list, key_lmd['thumb_click'])
-                    angle_index: float = get_angle(landmark_list, key_lmd['index_click'])
-                    angle_middle: float = get_angle(landmark_list, key_lmd['middle_click'])
-                    angle_ring: float = get_angle(landmark_list, key_lmd['ring_click'])
-                    angle_pinky: float = get_angle(landmark_list, key_lmd['pinky_click'])
+                    thumb_angle: float = get_angle(landmark_list, key_lmd['thumb_click'])
+                    index_angle: float = get_angle(landmark_list, key_lmd['index_click'])
+                    middle_angle: float = get_angle(landmark_list, key_lmd['middle_click'])
+                    ring_angle: float = get_angle(landmark_list, key_lmd['ring_click'])
+                    pinky_angle: float = get_angle(landmark_list, key_lmd['pinky_click'])
 
                     # EVENTS
 
                     # all 5 fingers down, close
-                    if angle_thumb >= 30 and angle_index >= 60 and angle_middle >= 60 and angle_ring >= 60 and angle_pinky >= 60:
+                    if thumb_angle >= 30 and index_angle >= 60 and middle_angle >= 60 and ring_angle >= 60 and pinky_angle >= 60:
                         print('ENDING')
                         pya.mouseUp(button='right', _pause=False)
                         pya.mouseUp(button='left', _pause=False)
@@ -128,11 +128,11 @@ if __name__ == '__main__':
 
                     # thumb bent, lock inputs
                     if config['thumb_lock']:
-                        if angle_thumb >= 30 and not thumb_active:  # finger down
+                        if thumb_angle >= 30 and not thumb_active:  # finger down
                             thumb_active = True
                             locked = not locked
                             print('LOCKED' if locked else 'UNLOCKED')
-                        if angle_thumb <= 10:
+                        if thumb_angle <= 10:
                             if thumb_active:
                                 thumb_active = False
 
@@ -165,12 +165,12 @@ if __name__ == '__main__':
 
                     # left click from index
                     if config['left_click'] and not locked:
-                        if angle_index >= 60:  # finger down
+                        if index_angle >= 60:  # finger down
                             if not left_active:
                                 print('LEFT DOWN')
                                 pya.mouseDown(button='left', _pause=False)
                                 left_active = True
-                        elif angle_index <= 40:  # finger up
+                        elif index_angle <= 40:  # finger up
                             if left_active:
                                 print('LEFT UP')
                                 pya.mouseUp(button='left', _pause=False)
@@ -179,25 +179,25 @@ if __name__ == '__main__':
                     # right click from middle
                     if config['right_click'] and not locked:
                         if not right_active:
-                            if angle_middle >= 60:  # finger down
+                            if middle_angle >= 60:  # finger down
                                 pya.mouseDown(button='right', _pause=False)
                                 right_active = True
                         elif right_active:
-                            if angle_middle <= 40:  # finger up
+                            if middle_angle <= 40:  # finger up
                                 pya.mouseUp(button='right', _pause=False)
                                 right_active = False
 
                     # scoll up and down through ring and pinky
                     if config['scroll'] and not locked:
-                        if not pinky_active and angle_ring >= 60:  # finger down
+                        if not pinky_active and ring_angle >= 60:  # finger down
                             ring_active = True
                             pya.scroll(-100, _pause=False)
-                        elif not ring_active and angle_pinky >= 60:  # finger down
+                        elif not ring_active and pinky_angle >= 60:  # finger down
                             pinky_active = True
                             pya.scroll(100, _pause=False)
-                        if angle_ring <= 40:  # finger up
+                        if ring_angle <= 40:  # finger up
                             ring_active = False
-                        if angle_pinky <= 40:  # finger up
+                        if pinky_angle <= 40:  # finger up
                             pinky_active = False
 
                     # display graphics
@@ -251,13 +251,13 @@ if __name__ == '__main__':
 
                         # display  position, left angle, right angle
                         cv2.putText(image, f'{capped_rel_pos}', (0, 40), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 0), 2)
-                        cv2.putText(image, f'{round(angle_index, 2)}', (0, 80), cv2.FONT_HERSHEY_PLAIN, 2,
+                        cv2.putText(image, f'{round(index_angle, 2)}', (0, 80), cv2.FONT_HERSHEY_PLAIN, 2,
                                     (0, 0, 255) if not left_active else (0, 255, 0), 2)  # show finger angle
-                        cv2.putText(image, f'{round(angle_middle, 2)}', (0, 120), cv2.FONT_HERSHEY_PLAIN, 2,
+                        cv2.putText(image, f'{round(middle_angle, 2)}', (0, 120), cv2.FONT_HERSHEY_PLAIN, 2,
                                     (255, 0, 0) if not right_active else (0, 255, 0), 2)  # show finger angle
-                        cv2.putText(image, f'{round(angle_ring, 2)}', (0, 160), cv2.FONT_HERSHEY_PLAIN, 2,
+                        cv2.putText(image, f'{round(ring_angle, 2)}', (0, 160), cv2.FONT_HERSHEY_PLAIN, 2,
                                     (0, 255, 255) if not ring_active else (0, 255, 0), 2)  # show finger angle
-                        cv2.putText(image, f'{round(angle_pinky, 2)}', (0, 200), cv2.FONT_HERSHEY_PLAIN, 2,
+                        cv2.putText(image, f'{round(pinky_angle, 2)}', (0, 200), cv2.FONT_HERSHEY_PLAIN, 2,
                                     (211, 0, 148) if not pinky_active else (0, 255, 0), 2)  # show finger angle
 
             if config['display']:
